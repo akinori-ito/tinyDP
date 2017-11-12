@@ -1,0 +1,11 @@
+Package: tinyDP
+Type: Package
+Title: A fast dynamic time warping
+Version: 1.0
+Date: 2017-11-12
+Author: Akinori Ito
+Maintainer: Akinori Ito <aito@spcom.ecei.tohoku.ac.jp>
+Description: Calculates the dynamic time warping (aka DP matching) between two
+    vectors.
+License: LGPL-3
+RoxygenNote: 5.0.1
