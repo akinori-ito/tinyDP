@@ -34,10 +34,7 @@ tinyDP1 <- function(x,y,window=50) {
     j_ind <- function(i,j) { return(j-jcenter[i]+window+1) }
     g[1,j_ind(1,1)] <- d[1,j_ind(1,1)] <- sum((x[1,]-y[1,])^2)
     bp[1,j_ind(1,1)] <- 2
-    d[2,j_ind(2,2)] <- sum((x[2,]-y[2,])^2)
-    g[2,j_ind(2,2)] <- g[1,j_ind(1,1)]+d[2,j_ind(2,2)]
-    bp[2,j_ind(2,2)] <- 2
-    for (i in 3:x.size) {
+    for (i in 2:x.size) {
         jmin <- max(jcenter[i]-window,1)
         jmax <- min(jcenter[i]+window,y.size)
         for (j in jmin:jmax) {
@@ -69,7 +66,7 @@ tinyDP1 <- function(x,y,window=50) {
         #assert_that(i >= 1, i <= x.size, j_ind(i,j) >= 1, j_ind(i,j) <= wlimit)
         b <- bp[i,j_ind(i,j)]
         if (b == 1) { 
-            opt <- rbind(matrix(c(i-2,j-1,i-1,j-1),ncol=2,byrow=T),opt)
+            opt <- rbind(matrix(c(i-1,j),ncol=2,byrow=T),opt)
             i <- i-1 
         }
         else if (b == 2) { 
@@ -78,7 +75,7 @@ tinyDP1 <- function(x,y,window=50) {
             j <- j-1 
         }
         else if (b == 3) { 
-            opt <- rbind(matrix(c(i-1,j-2,i-1,j-1),ncol=2,byrow=T),opt)
+            opt <- rbind(matrix(c(i,j-1),ncol=2,byrow=T),opt)
             j <- j-1 
         }
         else { 
