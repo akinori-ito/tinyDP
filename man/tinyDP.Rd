@@ -24,4 +24,3 @@ A list contains three elements:
 \description{
 tinyDP: A fast dynamic time warping
 }
-
