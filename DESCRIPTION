@@ -8,4 +8,4 @@ Maintainer: Akinori Ito <aito@spcom.ecei.tohoku.ac.jp>
 Description: Calculates the dynamic time warping (aka DP matching) between two
     vectors.
 License: LGPL-3
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

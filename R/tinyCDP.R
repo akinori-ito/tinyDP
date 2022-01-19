@@ -62,6 +62,7 @@ tinyCDP <- function(d) {
 
 #'
 #' backtrace: find the optimum path from the result of tinyCDP
+#' @export
 #' @param dp: result of DP maching calculated by tinyCDP()
 #' @param pos: the detection position
 #' @return the optimum path:  
