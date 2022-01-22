@@ -74,7 +74,8 @@ backtrace <- function(dp,pos) {
     b <- dp$bp[i,j]
     if (b == 1) { 
       opt <- rbind(matrix(c(i-1,j),ncol=2,byrow=T),opt)
-      i <- i-1 
+      i <- i-2
+      j <- j-1
     }
     else if (b == 2) { 
       opt <- rbind(matrix(c(i-1,j-1),ncol=2),opt)
@@ -83,7 +84,8 @@ backtrace <- function(dp,pos) {
     }
     else if (b == 3) { 
       opt <- rbind(matrix(c(i,j-1),ncol=2,byrow=T),opt)
-      j <- j-1 
+      i <- i-1
+      j <- j-2 
     }
     else { 
       print("Invalid backpointer")
