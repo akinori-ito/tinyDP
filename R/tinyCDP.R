@@ -11,16 +11,24 @@
 #'  bp: the backpointer matrix
 
 tinyCDP.sqr <- function(x,y) {
-  x.size <- nrow(x)
-  y.size <- nrow(y)
-  d <- array(Inf,dim=c(x.size,y.size))
-  for (i in 1:x.size) {
-      for (j in 1:y.size) {
-          d[i,j] <- sum((x[i,]-y[j,])^2)
-      }
-  }
+  #x.size <- nrow(x)
+  #y.size <- nrow(y)
+  #d <- array(Inf,dim=c(x.size,y.size))
+  #for (i in 1:x.size) {
+  #    for (j in 1:y.size) {
+  #        d[i,j] <- sum((x[i,]-y[j,])^2)
+  #    }
+  #}
+  d <- distMatrix(x,y)
   tinyCDP(d)
 }
+
+distMatrix <- function(X,Y) {
+  Xd <- matrix(apply(X,1,function(x){sum(x^2)}),nrow=nrow(X),ncol=nrow(Y))
+  Yd <- matrix(apply(Y,1,function(x){sum(x^2)}),nrow=nrow(X),ncol=nrow(Y),byrow=TRUE)
+  Xd+Yd-2*X%*%t(Y)
+}
+
 
 #'
 #' tinyCDP: the continuous DP matching
