@@ -10,7 +10,7 @@
 #'  d: the distance matrix
 #'  bp: the backpointer matrix
 
-tinyCDP.sqr <- function(x,y) {
+tinyCDP.sqr <- function(x,y,...) {
   #x.size <- nrow(x)
   #y.size <- nrow(y)
   #d <- array(Inf,dim=c(x.size,y.size))
@@ -20,7 +20,7 @@ tinyCDP.sqr <- function(x,y) {
   #    }
   #}
   d <- distMatrix(x,y)
-  tinyCDP(d)
+  tinyCDP(d,...)
 }
 
 distMatrix <- function(X,Y) {
@@ -41,7 +41,7 @@ distMatrix <- function(X,Y) {
 #'  d: the distance matrix
 #'  bp: the backpointer matrix
 #'
-tinyCDP <- function(d) {
+tinyCDP <- function(d,extend_x=TRUE,extend_y=TRUE) {
   x.size <- nrow(d)
   y.size <- ncol(d)
   g <- array(Inf,dim=c(x.size,y.size))
@@ -52,10 +52,12 @@ tinyCDP <- function(d) {
       g[i,1] <- d[i,1]
       bp[i,1] <- 2
       for (j in 2:y.size) {
-          g3 <- Inf
-          g1 <- g[i-2,j-1]+d[i-1,j]
+          g1 <- g3 <- Inf
+          if (extend_x) {
+            g1 <- g[i-2,j-1]+d[i-1,j]
+          }
           g2 <- g[i-1,j-1]
-          if (j > 1) {
+          if (extend_y && j > 1) {
               g3 <- g[i-1,j-2]+d[i,j-1]
           }
           dists <- c(g1, g2, g3)
