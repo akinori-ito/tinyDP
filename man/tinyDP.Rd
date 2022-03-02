@@ -20,6 +20,7 @@ A list contains three elements:
  xsize: length (number of rows) of x
  ysize: length (number of rows) of y
  opt: n times 2 matrix, where a row contains the corresponding indices of x and y
+ score: the matching distance
 }
 \description{
 tinyDP: A fast dynamic time warping

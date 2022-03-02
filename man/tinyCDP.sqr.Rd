@@ -4,7 +4,7 @@
 \alias{tinyCDP.sqr}
 \title{tinyCDP.sqr: the continuous DP matching using squared Euclidean distance}
 \usage{
-tinyCDP.sqr(x, y)
+tinyCDP.sqr(x, y, ...)
 }
 \arguments{
 \item{x:}{a matrix of the input signal}

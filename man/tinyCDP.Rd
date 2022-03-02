@@ -4,7 +4,7 @@
 \alias{tinyCDP}
 \title{tinyCDP: the continuous DP matching}
 \usage{
-tinyCDP(d)
+tinyCDP(d, extend_x = TRUE, extend_y = TRUE)
 }
 \arguments{
 \item{d:}{the distance matrix (nrow(d) is the length of the database signal, ncol(d) is the length of the query signal)}
