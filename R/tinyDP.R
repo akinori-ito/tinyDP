@@ -10,6 +10,9 @@
 #'  xsize: length (number of rows) of x
 #'  ysize: length (number of rows) of y
 #'  opt: n times 2 matrix, where a row contains the corresponding indices of x and y
+#'  d: the distance matrix
+#'  g: the matrix of accumulated distance
+#'  bp: the backpointer matrix
 
 tinyDP <-
 function(x,y,window=50,type=1) {
@@ -83,7 +86,7 @@ tinyDP1 <- function(x,y,window=50) {
             break 
         }
     }
-    list(xsize=x.size,ysize=y.size,opt=opt)
+    list(xsize=x.size,ysize=y.size,opt=opt,g=g,d=d,bp=bp)
 }
 
 
@@ -153,7 +156,7 @@ tinyDP2 <- function(x,y,window=50) {
             break 
         }
     }
-    list(xsize=x.size,ysize=y.size,opt=opt)
+    list(xsize=x.size,ysize=y.size,opt=opt,opt=opt,g=g,d=d,bp=bp)
 }
 
 toMatrix.tinyDP <- function(g) {
