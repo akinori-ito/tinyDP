@@ -153,7 +153,7 @@ tinyDP2 <- function(x,y,window=50) {
             break 
         }
     }
-    list(xsize=x.size,ysize=y.size,opt=opt,opt=opt,g=g,d=d,bp=bp)
+    list(xsize=x.size,ysize=y.size,opt=opt,score=g[x.size,j_ind(x.size,y.size)])
 }
 
 toMatrix.tinyDP <- function(g) {
