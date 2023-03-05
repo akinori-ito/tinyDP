@@ -5,7 +5,7 @@
 #' @param x A matrix
 #' @param y A matrix
 #' @param window The window width with which the DTW is calculated,
-#' @param type If type==1, the DTW has not restriction on the length difference between x and y. If type==2, the length of the one matrix should be more than the half and less than the twice of the other matrix.
+#' @param type If type==1, the DTW has no restriction on the length difference between x and y. If type==2, the length of the one matrix should be more than the half and less than the twice of the other matrix.
 #' @param distfunc The distance function
 #' @return A list contains three elements:
 #'  xsize: length (number of rows) of x
