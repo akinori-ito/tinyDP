@@ -6,6 +6,7 @@
 #' @param y A matrix
 #' @param window The window width with which the DTW is calculated,
 #' @param type If type==1, the DTW has not restriction on the length difference between x and y. If type==2, the length of the one matrix should be more than the half and less than the twice of the other matrix.
+#' @param distfunc The distance function
 #' @return A list contains three elements:
 #'  xsize: length (number of rows) of x
 #'  ysize: length (number of rows) of y
@@ -13,18 +14,18 @@
 #'  score: the matching distance
 
 tinyDP <-
-function(x,y,window=50,type=1) {
+function(x,y,window=50,type=1,distfunc=eucrid2) {
     if (type == 1) {
-        tinyDP1(x,y,window)
+        tinyDP1(x,y,window,distfunc)
     } else if (type == 2) {
-        tinyDP2(x,y,window)
+        tinyDP2(x,y,window,distfunc)
     } else {
         stop(paste("tinyDP: unknown type:",type))
     }
 }
 
  
-tinyDP1 <- function(x,y,window=50) {
+tinyDP1 <- function(x,y,window,distfunc) {
     x.size <- dim(x)[1]
     y.size <- dim(y)[1]
     wlimit <- 2*window+1
@@ -33,7 +34,7 @@ tinyDP1 <- function(x,y,window=50) {
     bp <- array(0,dim=c(x.size,wlimit))
     jcenter <- 1+floor((0:(x.size-1))/(x.size-1)*(y.size-1))
     j_ind <- function(i,j) { return(j-jcenter[i]+window+1) }
-    g[1,j_ind(1,1)] <- d[1,j_ind(1,1)] <- sum((x[1,]-y[1,])^2)
+    g[1,j_ind(1,1)] <- d[1,j_ind(1,1)] <- distfunc(x[1,],y[1,])
     bp[1,j_ind(1,1)] <- 2
     for (i in 2:x.size) {
         jmin <- max(jcenter[i]-window,1)
@@ -41,7 +42,7 @@ tinyDP1 <- function(x,y,window=50) {
         for (j in jmin:jmax) {
             w <- j_ind(i,j)
             w1 <- j_ind(i-1,j)
-            d[i,w] <- sum((x[i,]-y[j,])^2)
+            d[i,w] <- distfunc(x[i,],y[j,])
             g1 <- g2 <- g3 <- Inf
             if (w1 <= wlimit) {
                 g1 <- g[i-1,w1]
@@ -87,7 +88,7 @@ tinyDP1 <- function(x,y,window=50) {
     list(xsize=x.size,ysize=y.size,opt=opt,score=g[x.size,j_ind(x.size,y.size)])
 }
 
-tinyDP2 <- function(x,y,window=50) {
+tinyDP2 <- function(x,y,window,distfunc) {
     x.size <- dim(x)[1]
     y.size <- dim(y)[1]
     wlimit <- 2*window+1
@@ -96,9 +97,9 @@ tinyDP2 <- function(x,y,window=50) {
     bp <- array(0,dim=c(x.size,wlimit))
     jcenter <- 1+floor((0:(x.size-1))/(x.size-1)*(y.size-1))
     j_ind <- function(i,j) { return(j-jcenter[i]+window+1) }
-    g[1,j_ind(1,1)] <- d[1,j_ind(1,1)] <- sum((x[1,]-y[1,])^2)
+    g[1,j_ind(1,1)] <- d[1,j_ind(1,1)] <- distfunc(x[1,],y[1,])
     bp[1,j_ind(1,1)] <- 2
-    d[2,j_ind(2,2)] <- sum((x[2,]-y[2,])^2)
+    d[2,j_ind(2,2)] <- distfunc(x[2,],y[2,])
     g[2,j_ind(2,2)] <- g[1,j_ind(1,1)]+d[2,j_ind(2,2)]
     bp[2,j_ind(2,2)] <- 2
     for (i in 3:x.size) {
@@ -108,7 +109,7 @@ tinyDP2 <- function(x,y,window=50) {
             w <- j_ind(i,j)
             w1 <- j_ind(i-1,j)
             w2 <- j_ind(i-2,j)
-            d[i,w] <- sum((x[i,]-y[j,])^2)
+            d[i,w] <- distfunc(x[i,],y[j,])
             g1 <- g2 <- g3 <- Inf
             if (w1 <= wlimit && w2-1 <= wlimit) {
                 g1 <- g[i-2,w2-1]+d[i-1,w1]
@@ -171,5 +172,37 @@ toMatrix.tinyDP <- function(g) {
         }
     }
     return(list(g=g.mat,d=d.mat,bp=bp.mat))
+}
+
+#' eucrid2: Squared Eucridean distance
+#' @param x,y A vector
+#' @return squared euclidean distance between x and y
+#' @export
+eucrid2 <- function(x,y) {
+  sum((x-y)^2)
+}
+
+#' eucrid: Eucridean distance
+#' @param x,y A vector
+#' @return Euclidean distance between x and y
+#' @export
+eucrid <- function(x,y) {
+  sqrt(sum((x-y)^2))
+}
+
+#' manhattan: Manhattan distance
+#' @param x,y A vector
+#' @return Manhattan (L1) distance between x and y
+#' @export
+manhattan <- function(x,y) {
+  sum(abs(x-y))
+}
+
+#' negcos: Negative cosine distance
+#' @param x,y A vector
+#' @return Manhattan (L1) distance between x and y
+#' @export
+negcos <- function(x,y) {
+  -x%*%y
 }
 
