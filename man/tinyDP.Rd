@@ -4,7 +4,7 @@
 \alias{tinyDP}
 \title{tinyDP: A fast dynamic time warping}
 \usage{
-tinyDP(x, y, window = 50, type = 1)
+tinyDP(x, y, window = 50, type = 1, distfunc = eucrid2)
 }
 \arguments{
 \item{x}{A matrix}
@@ -14,6 +14,8 @@ tinyDP(x, y, window = 50, type = 1)
 \item{window}{The window width with which the DTW is calculated,}
 
 \item{type}{If type==1, the DTW has not restriction on the length difference between x and y. If type==2, the length of the one matrix should be more than the half and less than the twice of the other matrix.}
+
+\item{distfunc}{The distance function}
 }
 \value{
 A list contains three elements:
