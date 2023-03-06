@@ -4,7 +4,13 @@
 \alias{tinyDP}
 \title{tinyDP: A fast dynamic time warping}
 \usage{
-tinyDP(x, y, window = 50, type = 1, distfunc = eucrid2)
+tinyDP(
+  x,
+  y,
+  window = 50,
+  type = 1,
+  distfunc = c(euclid2, euclid, manhattan, negcos)
+)
 }
 \arguments{
 \item{x}{A matrix}

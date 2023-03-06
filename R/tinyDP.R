@@ -14,7 +14,7 @@
 #'  score: the matching distance
 
 tinyDP <-
-function(x,y,window=50,type=1,distfunc=eucrid2) {
+function(x,y,window=50,type=1,distfunc=c(euclid2,euclid,manhattan,negcos)) {
     if (type == 1) {
         tinyDP1(x,y,window,distfunc)
     } else if (type == 2) {
@@ -174,19 +174,19 @@ toMatrix.tinyDP <- function(g) {
     return(list(g=g.mat,d=d.mat,bp=bp.mat))
 }
 
-#' eucrid2: Squared Eucridean distance
+#' euclid2: Squared Euclidean distance
 #' @param x,y A vector
 #' @return squared euclidean distance between x and y
 #' @export
-eucrid2 <- function(x,y) {
+euclid2 <- function(x,y) {
   sum((x-y)^2)
 }
 
-#' eucrid: Eucridean distance
+#' euclid: Euclidean distance
 #' @param x,y A vector
 #' @return Euclidean distance between x and y
 #' @export
-eucrid <- function(x,y) {
+euclid <- function(x,y) {
   sqrt(sum((x-y)^2))
 }
 
