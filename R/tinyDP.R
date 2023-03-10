@@ -14,14 +14,22 @@
 #'  score: the matching distance
 
 tinyDP <-
-function(x,y,window=50,type=1,distfunc=c(euclid2,euclid,manhattan,negcos)) {
-    if (type == 1) {
-        tinyDP1(x,y,window,distfunc)
-    } else if (type == 2) {
-        tinyDP2(x,y,window,distfunc)
-    } else {
-        stop(paste("tinyDP: unknown type:",type))
-    }
+function(x,y,window=50,type=1,distfunc=c("euclid2","euclid","manhattan","negcos")) {
+  distfunc <- match.arg(distfunc)
+  distfunc <- switch(
+    distfunc,
+    "euclid2" = euclid2,
+    "euclid" = euclid,
+    "manhattan" = manhattan,
+    "negcos" = negcos
+  )
+  if (type == 1) {
+      tinyDP1(x,y,window,distfunc)
+  } else if (type == 2) {
+      tinyDP2(x,y,window,distfunc)
+  } else {
+      stop(paste("tinyDP: unknown type:",type))
+  }
 }
 
  
